@@ -29,26 +29,52 @@ def get_sents(lines):
 
     return sentences_list
 
-tasks = ['train', 'dev', 'test']
-ds_dict = {}
-for task in tasks:
-    fin_klp = open(KLP_DS_PATH[task], "r", encoding='utf-8')
-    lines_klp = fin_klp.readlines()
-    fin_klp.close()
+def klp():
+    tasks = ['train', 'dev', 'test']
+    ds_dict = {}
+    for task in tasks:
+        fin_klp = open(KLP_DS_PATH[task], "r", encoding='utf-8')
+        lines_klp = fin_klp.readlines()
+        fin_klp.close()
 
-    sents_klp = get_sents(lines_klp)
-    print(len(sents_klp), "records collected from", KLP_DS_PATH[task])
+        sents_klp = get_sents(lines_klp)
+        print(len(sents_klp), "records collected from", KLP_DS_PATH[task])
 
-    ds_ = ner_dataset_generator(sents_klp)
+        ds_ = ner_dataset_generator(sents_klp)
+        print(ds_)
+
+        ds_dict[task] = ds_
+
+    ds_klp = DatasetDict(ds_dict)
+    print(ds_klp)
+
+
+
+    print("uploading ds to huggingface hub ...", end='')
+    ds_klp.push_to_hub("soddokayo/kmou-2016klp")
+    print("done")
+
+def crime2():
+    CRIME2_DS_PATH = "crime_dataset.txt"
+    fin_crime = open(CRIME2_DS_PATH, "r", encoding='utf-8')
+    lines_crime = fin_crime.readlines()
+    fin_crime.close()
+
+    sents_crime = get_sents(lines_crime)
+    print(len(sents_crime), "records collected from", CRIME2_DS_PATH)
+
+    ds_ = ner_dataset_generator(sents_crime)
     print(ds_)
 
-    ds_dict[task] = ds_
+    ds_dict = ds_.train_test_split(0.1)
 
-ds_klp = DatasetDict(ds_dict)
-print(ds_klp)
+    ds_crime2 = DatasetDict(ds_dict)
+    print(ds_crime2)
 
 
 
-print("uploading ds to huggingface hub ...", end='')
-ds_klp.push_to_hub("soddokayo/kmou-2016klp")
-print("done")
+    print("uploading ds to huggingface hub ...", end='')
+    ds_crime2.push_to_hub("soddokayo/crime2")
+    print("done")
+
+crime2()
