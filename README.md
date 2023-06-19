@@ -1,6 +1,6 @@
 # NER Dataset Generator
 
-NER 태깅된 텍스트 또는 데이터셋을 **KLUE/NER 데이터셋** form으로 변환
+NER 태깅된 텍스트 또는 데이터셋을 **KLUE/NER 데이터셋** form으로 변환 <br />
 변환된 데이터셋은 Huggingface hub에 업로드됨.
 
 
