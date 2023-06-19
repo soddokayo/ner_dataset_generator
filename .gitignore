@@ -1,0 +1,11 @@
+# 파이썬 캐시
+__pycache__/
+ner_datasets/__pycache__
+
+# 데이터셋 (사용 시 external 폴더 내부를 밖으로 꺼내면 됨)
+# 데이터셋 1 : https://github.com/kmounlp/NER
+# 데이터셋 2 : https://github.com/naver/nlp-challenge
+ner_datasets/externals.zip
+
+# venv 환경
+venv_/
